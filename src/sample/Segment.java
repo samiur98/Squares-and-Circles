@@ -13,9 +13,7 @@ public class Segment {
     private int indicator;
     private boolean[] squares = new boolean[3];//Boolean list previously mentioned.
     public Segment() {
-        //this.last=last;
         generate();
-        //fix(last.getSquares(),last.getIndicator());
     }
 
     private void generate() {
@@ -25,9 +23,6 @@ public class Segment {
         Random random = new Random();
         int number = random.nextInt(7);
         if(number<3){squares[number]=true;}
-        /*else{this.indicator=last.getIndicator();}
-        if(number==2){this.indicator=1;}
-        if(number==0){this.indicator=0;}*/
     }
     public void init(){
         //Removes all obstacles from the segment.
@@ -35,13 +30,6 @@ public class Segment {
         squares[1]=false;
         squares[2]=false;
         indicator=0;
-    }
-    private void fix(boolean[] list,int in){
-        if(list[1]){
-            indicator=in;
-            if(in==0){squares[2]=false;}
-            else{squares[0]=false;}
-        }
     }
         @Override
         public String toString() {
