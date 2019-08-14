@@ -1,7 +1,5 @@
 package sample;
-
-import javafx.scene.canvas.Canvas;
-
+import java.util.Arrays;
 import java.util.Random;
 
 public class Segment {
@@ -9,11 +7,17 @@ public class Segment {
     //Segments are an abstract concept used in the game.
     //Segments contain obstacles(The squares)
     //Segments are imagined to be divided into 3 vertical parts each of which may contain an obstacle
-    //A boolean list(squares) is responsible for keeping track of the vertical components of the segment.
-    private int indicator;
-    private boolean[] squares = new boolean[3];//Boolean list previously mentioned.
+    //A boolean array(squares) is responsible for keeping track of the squares in the segment.
+    private final boolean[] squares = new boolean[3];//Boolean list previously mentioned.
+
     public Segment() {
-        generate();
+        this.generate();
+    }
+
+    //Getter Functions/Accessor Methods.
+    public boolean[] getSquares() {
+        //Returns the array containing the boolean values that represent the obstacles in a segment.
+        return this.squares;
     }
 
     private void generate() {
@@ -22,42 +26,57 @@ public class Segment {
         //Assignment of obstacles is done using the Random class.
         Random random = new Random();
         int number = random.nextInt(7);
-        if(number<3){squares[number]=true;}
+        if(number<3){
+            squares[number]=true;
+        }
     }
     public void init(){
-        //Removes all obstacles from the segment.
+        //Returns a Segment object with no obstacles/squares.
         squares[0]=false;
         squares[1]=false;
         squares[2]=false;
-        indicator=0;
     }
-        @Override
-        public String toString() {
-            //toString method of the class(Pretty self explanitory).
-            String result = "[";
-            if (squares[0]) {
-                result = result + "true,";
-            } else {
-                result = result + "false,";
-            }
-            if (squares[1]) {
-                result = result + "true,";
-            } else {
-                result = result + "false,";
-            }
-            if (squares[2]) {
-                result = result + "true]";
-            } else {
-                result = result + "false]";
-            }
-            return result;
+    @Override
+    public String toString() {
+        String result = "[";
+        if (squares[0]) {
+            result = result + "true,";
         }
-        public boolean[] getSquares() {
-        //Returns the "square" of the segment.Read previous comments if this does not make any sense.
-        return this.squares;
+        else {
+            result = result + "false,";
         }
-        public int getIndicator(){
-            return this.indicator;
+        if (squares[1]) {
+            result = result + "true,";
         }
+        else {
+            result = result + "false,";
+        }
+        if (squares[2]) {
+            result = result + "true]";
+        }
+        else {
+            result = result + "false]";
+        }
+        return result;
     }
+    @Override
+    public boolean equals(Object other){
+        if(this == other){
+            return true;
+        }
+        if(other == null){
+            return false;
+        }
+        if(this.getClass() != other.getClass()){
+            return false;
+        }
+        Segment segment = (Segment) other;
+        return Arrays.equals(this.squares, segment.getSquares());
+    }
+    @Override
+    public int hashCode(){
+        return Arrays.hashCode(this.squares);
+    }
+
+}
 

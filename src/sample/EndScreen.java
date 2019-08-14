@@ -7,65 +7,36 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class EndScreen extends MusicScreen {
-    //Class responsible for rendering the end screen ie the screen seen after player collides with square.
-    //"The game over" screen.
-    private int score;
-    private Button menu;
-    private Button restart;
-    private Background background;
-    private BackgroundFill backgroundFill;
-    public EndScreen(ColorPack theme,int score){
-           super(theme,"sad.mp3");
-           this.score=score;
-           menu=new Button();
-           restart=new Button();
-           backgroundFill=new BackgroundFill(getTheme().getPrimary(),null,null);
-           background=new Background(backgroundFill);
+    //Class responsible for rendering the end screen, the screen seen after player collides with square.
+
+    private final int score;//Integer representing the score attained by a player after a game session.
+
+    public EndScreen(Theme theme, int score) {
+        super(theme, "sad.mp3");
+        this.score = score;
     }
-    //Getters
-    public int getScore(){
+
+    //Getter Functions/Accessor Methods.
+    public int getScore() {
         return this.score;
     }
-    public Button getMenu(){
-        return menu;
-    }
-    public Button getRestart(){
-        return restart;
-    }
-    public BackgroundFill getBackgroundFill(){
-        return backgroundFill;
-    }
-    public Background getBackground(){
-        return background;
-    }
-    //Setters
-    public void setScore(Integer score){
-        this.score=score;
-    }
-    public void setMenu(Button button){
-        menu=button;
-    }
-    public void setRestart(Button button){
-        restart=button;
-    }
-    public void setBackground(Background background){
-        this.background=background;
-    }
-    public void setBackgroundFill(BackgroundFill backgroundFill){
-        this.backgroundFill=backgroundFill;
-    }
-    public Scene getScene(Stage stage){
+    public Scene getScene(Stage stage) {
         //Method responsible for returning the scene of the end screen.
-        this.play_song();
+        Button menu = new Button();
+        Button restart = new Button();
+        BackgroundFill backgroundFill = new BackgroundFill(getTheme().getPrimary(), null, null);
+        Background background = new Background(backgroundFill);
         getGraphicsContext().setFill(getTheme().getPrimary());
         getGraphicsContext().setFont(new Font(70));
-        getGraphicsContext().fillText("GAME",145,100);
-        getGraphicsContext().fillText("OVER",150,180);
+        getGraphicsContext().fillText("GAME", 145, 100);
+        getGraphicsContext().fillText("OVER", 150, 180);
         getGraphicsContext().setFont(new Font(80));
-        getGraphicsContext().fillText("SCORE:",90,280);
+        getGraphicsContext().fillText("SCORE: ", 90, 280);
         getGraphicsContext().setFont(new Font(90));
-        getGraphicsContext().fillText(Integer.toString(score),150,380);
+        getGraphicsContext().fillText(Integer.toString(score), 150, 380);
         restart.setLayoutX(40);
         restart.setLayoutY(400);
         restart.setMinHeight(80);
@@ -74,7 +45,7 @@ public class EndScreen extends MusicScreen {
         restart.setTextFill(getTheme().getSecondary());
         restart.setBackground(background);
         restart.setText("RESTART");
-        restart.setOnMouseClicked(StarterEvent.action(this,stage));
+        restart.setOnMouseClicked(new StarterEvent(this, stage));
         menu.setLayoutX(260);
         menu.setLayoutY(400);
         menu.setMinHeight(80);
@@ -83,8 +54,25 @@ public class EndScreen extends MusicScreen {
         menu.setTextFill(getTheme().getSecondary());
         menu.setBackground(background);
         menu.setText("MENU");
-        menu.setOnMouseClicked(TransitionEvent.action(this,new StartScreen(this.getTheme()),stage));
-        getGroup().getChildren().addAll(getCanvas(),restart,menu);
+        menu.setOnMouseClicked(new TransitionEvent(this, new StartScreen(this.getTheme()), stage));
+        getGroup().getChildren().addAll(getCanvas(), restart, menu);
         return getScene();
     }
+
+    @Override
+    public String toString(){
+        return "EndScreen";
     }
+    @Override
+    public boolean equals(Object other){
+        if(!super.equals(other)){
+            return false;
+        }
+        EndScreen endScreen = (EndScreen) other;
+        return this.score == endScreen.getScore();
+    }
+    @Override
+    public int hashCode(){
+        return Objects.hash(this.score) + (super.hashCode() * 31);
+    }
+}

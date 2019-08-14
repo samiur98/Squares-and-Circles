@@ -7,37 +7,30 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.stage.Stage;
 
 public class ThemeScreen extends MusicScreen{
-    //Class responsible for rendering the Theme screen of the game.
-    private Button ecstasy;//Buttons associated with respective themes.
-    private Button winter;
-    private Button rio;
-    private Button nautica;
-    private Button midnight;
-    private Button panther;
-    private Button cola;
-    private Button turtle;
-    private Button back;//Button responsible for exiting the theme screen and returning to the start screen.
-    private BackgroundFill backgroundFill;
-    private Background background;
-    public ThemeScreen(ColorPack theme){
-        super(theme,"menu.mp3");
-        ecstasy=new Button();
-        winter=new Button();
-        rio=new Button();
-        nautica=new Button();
-        midnight=new Button();
-        panther=new Button();
-        cola=new Button();
-        turtle=new Button();
-        back=new Button();
-        backgroundFill=new BackgroundFill(getTheme().getPrimary(),null,null);
-        background=new Background(backgroundFill);
+    //Class responsible for rendering the ThemeScreen (The Screen where users can change the theme) of the game.
 
+    public ThemeScreen(Theme theme){
+        super(theme,"menu.mp3");
     }
+
     public Scene getScene(Stage stage){
-        //Method responsible for returning the scene of the themescreen.
-        backgroundFill=new BackgroundFill(getTheme().getPrimary(),null,null);
-        background=new Background(backgroundFill);
+        //Method responsible for returning the scene of the themeScreen.
+        BackgroundFill backgroundFill=new BackgroundFill(getTheme().getPrimary(),null,null);
+        Background background=new Background(backgroundFill);
+
+        //Button Declarations.
+        Button ecstasy = new Button();
+        Button winter = new Button();
+        Button rio = new Button();
+        Button nautica = new Button();
+        Button midnight = new Button();
+        Button panther = new Button();
+        Button cola = new Button();
+        Button turtle = new Button();
+        Button back = new Button();
+
+        //Buttons that change theme.
+        //Button for the ecstasy theme.
         ecstasy.setBackground(background);
         ecstasy.setLayoutX(130);
         ecstasy.setLayoutY(10);
@@ -45,7 +38,8 @@ public class ThemeScreen extends MusicScreen{
         ecstasy.setMinHeight(50);
         ecstasy.setTextFill(getTheme().getSecondary());
         ecstasy.setText("ECSTASY");
-        ecstasy.setOnMouseClicked(ThemeEvent.action("ecstasy",this,stage));
+        ecstasy.setOnMouseClicked(new ThemeEvent("ecstasy",this, stage));
+        //Button for the winter theme.
         winter.setBackground(background);
         winter.setLayoutX(130);
         winter.setLayoutY(70);
@@ -53,7 +47,8 @@ public class ThemeScreen extends MusicScreen{
         winter.setMinHeight(50);
         winter.setTextFill(getTheme().getSecondary());
         winter.setText("WINTER");
-        winter.setOnMouseClicked(ThemeEvent.action("winter",this,stage));
+        winter.setOnMouseClicked(new ThemeEvent("winter",this, stage));
+        //Button for the rio theme.
         rio.setBackground(background);
         rio.setLayoutX(130);
         rio.setLayoutY(130);
@@ -61,7 +56,8 @@ public class ThemeScreen extends MusicScreen{
         rio.setMinHeight(50);
         rio.setTextFill(getTheme().getSecondary());
         rio.setText("RIO");
-        rio.setOnMouseClicked(ThemeEvent.action("rio",this,stage));
+        rio.setOnMouseClicked(new ThemeEvent("rio", this, stage));
+        //Button for the nautica theme.
         nautica.setBackground(background);
         nautica.setLayoutX(130);
         nautica.setLayoutY(190);
@@ -69,7 +65,8 @@ public class ThemeScreen extends MusicScreen{
         nautica.setMinHeight(50);
         nautica.setTextFill(getTheme().getSecondary());
         nautica.setText("NAUTICA");
-        nautica.setOnMouseClicked(ThemeEvent.action("nautica",this,stage));
+        nautica.setOnMouseClicked(new ThemeEvent("nautica",this, stage));
+        //Button for the midnight theme.
         midnight.setBackground(background);
         midnight.setLayoutX(130);
         midnight.setLayoutY(250);
@@ -77,7 +74,8 @@ public class ThemeScreen extends MusicScreen{
         midnight.setMinHeight(50);
         midnight.setTextFill(getTheme().getSecondary());
         midnight.setText("MIDNIGHT");
-        midnight.setOnMouseClicked(ThemeEvent.action("midnight",this,stage));
+        midnight.setOnMouseClicked(new ThemeEvent("midnight",this, stage));
+        //Button for the panther theme.
         panther.setBackground(background);
         panther.setLayoutX(130);
         panther.setLayoutY(310);
@@ -85,7 +83,8 @@ public class ThemeScreen extends MusicScreen{
         panther.setMinHeight(50);
         panther.setTextFill(getTheme().getSecondary());
         panther.setText("PANTHER");
-        panther.setOnMouseClicked(ThemeEvent.action("panther",this,stage));
+        panther.setOnMouseClicked(new ThemeEvent("panther",this, stage));
+        //Button for the cola theme.
         cola.setBackground(background);
         cola.setLayoutX(130);
         cola.setLayoutY(370);
@@ -93,7 +92,8 @@ public class ThemeScreen extends MusicScreen{
         cola.setMinHeight(50);
         cola.setTextFill(getTheme().getSecondary());
         cola.setText("COLA");
-        cola.setOnMouseClicked(ThemeEvent.action("cola",this,stage));
+        cola.setOnMouseClicked(new ThemeEvent("cola",this, stage));
+        //Button for the turtle theme.
         turtle.setBackground(background);
         turtle.setLayoutX(130);
         turtle.setLayoutY(430);
@@ -101,7 +101,9 @@ public class ThemeScreen extends MusicScreen{
         turtle.setMinHeight(50);
         turtle.setTextFill(getTheme().getSecondary());
         turtle.setText("TURTLE");
-        turtle.setOnMouseClicked(ThemeEvent.action("turtle",this,stage));
+        turtle.setOnMouseClicked(new ThemeEvent("turtle",this, stage));
+
+        //Button that allows the user to return to the main menu of the game.
         back.setBackground(background);
         back.setLayoutX(20);
         back.setLayoutY(10);
@@ -109,76 +111,15 @@ public class ThemeScreen extends MusicScreen{
         back.setMinHeight(50);
         back.setTextFill(getTheme().getSecondary());
         back.setText("BACK");
-        back.setOnMouseClicked(TransitionEvent.action(this,new StartScreen(this.getTheme()),stage));
+        back.setOnMouseClicked( new TransitionEvent(this, new StartScreen(this.getTheme()), stage));
+
+        //Finishing.
         getGroup().getChildren().addAll(ecstasy,winter,rio,nautica,midnight,panther,cola,turtle,back);
         return getScene();
     }
-    //Getters
-    public Button getEcstasy(){
-        return ecstasy;
-    }
-    public Button getWinter(){
-        return winter;
-    }
-    public Button getRio(){
-        return rio;
-    }
-    public Button getNautica(){
-        return nautica;
-    }
-    public Button getMidnight(){
-        return midnight;
-    }
-    public Button getPanther(){
-        return panther;
-    }
-    public Button getCola(){
-        return cola;
-    }
-    public Button getTurtle(){
-        return turtle;
-    }
-    public Button getBack(){
-        return back;
-    }
-    public Background getBackground(){
-        return background;
-    }
-    public BackgroundFill getBackgroundFill(){
-        return backgroundFill;
-    }
-    //Setters
-    public void setEcstasy(Button button){
-        ecstasy=button;
-    }
-    public void setWinter(Button button){
-        winter=button;
-    }
-    public void setRio(Button button){
-        rio=button;
-    }
-    public void setNautica(Button button){
-        nautica=button;
-    }
-    public void setMidnight(Button button){
-        midnight=button;
-    }
-    public void  setPanther(Button button){
-        panther=button;
-    }
-    public void setCola(Button button){
-        cola=button;
-    }
-    public void  setTurtle(Button button){
-        turtle=button;
-    }
-    public void setBack(Button button){
-        back=button;
-    }
-    public void setBackgroundFill(BackgroundFill backgroundFill){
-        this.backgroundFill=backgroundFill;
-    }
-    public void setBackground(Background background){
-        this.background=background;
+
+    @Override
+    public String toString(){
+        return "ThemeScreen";
     }
 }
